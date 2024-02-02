@@ -1,12 +1,22 @@
-
-from django.contrib import admin
+# プロジェクトで使うURLを管理するファイル
 from django.urls import path
-from blog.views import frontpage, post_detail
+from blog import views
+from django.contrib import admin
+from django.urls import path, include
+from django.contrib.auth import views as auth_views
+from django.conf import settings
+from django.conf.urls.static import static
 
-# ルーターの役割を担う
 urlpatterns = [
-    path("admin/", admin.site.urls),
-    path("", frontpage),
-    # クリックしたら投稿の詳細ページに飛ぶ
-    path("<slug:slug>/", post_detail, name="post_detail") #投稿1のURLがpost-1, 投稿2のURLがpost-2となる
-]
+    path('admin/', admin.site.urls), # 管理サイトのURL
+    path('', views.homepage, name='homepage'), # トップページのURL
+    path('campsites/<int:pk>/', views.campsite_detail, name='campsite_detail'), # キャンプ場詳細ページのURL
+    path('campsite/<int:campsite_id>/book/', views.create_booking, name='create_booking'),
+    path('booking/<int:booking_id>/', views.booking_detail, name='booking_detail'),
+    path('login/', views.user_login, name='user_login'),  # ログインビューへのパス
+    path('logout/', auth_views.LogoutView.as_view(), name='user_logout')  # ログアウトビューへのパス
+] 
+
+# デバッグモードの場合、メディアファイルのURLを追加
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

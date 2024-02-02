@@ -1,24 +1,54 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="ja">
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Djangoブログ</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"><!--viewportはページの表示方法を指定するためのメタタグ-->
+    <title>キャンプ予約サイト</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma/css/bulma.min.css">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
 
 <body>
-    <nav class="navbar is-primary">
-        <a href="/" class="navbar-item">
-            <strong>プログラミングチュートリアル</strong>
-        </a>
+    <nav class="navbar is-primary" role="navigation" aria-label="main navigation">
+        <div class="container">
+            <!-- ナビゲーションブランド -->
+            <div class="navbar-brand">
+                <a class="navbar-item" href="{% url 'homepage' %}">
+                    キャンプ予約サイト
+                </a>
+            </div>
+
+            <!-- ナビゲーションメニュー -->
+            <div id="navbarBasicExample" class="navbar-menu">
+                <div class="navbar-end" style="padding-right: 10px;">
+                    {% if user.is_authenticated %}
+                    <div class="navbar-item has-dropdown is-hoverable">
+                        <a class="navbar-link">
+                            {{ user.username }}
+                        </a>
+                        <div class="navbar-dropdown">
+                            <a class="navbar-item" href="{% url 'user_logout' %}">
+                                ログアウト
+                            </a>
+                        </div>
+                    </div>
+                    {% else %}
+                    <a class="navbar-item" href="{% url 'user_login' %}">
+                        ログイン
+                    </a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
     </nav>
 
     <section class="section">
         <div class="container">
             {% block content %}
             {% endblock %}
+        </div>
     </section>
 </body>
 

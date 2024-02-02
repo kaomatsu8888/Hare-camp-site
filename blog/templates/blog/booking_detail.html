@@ -1,0 +1,10 @@
+{% extends "blog/base.html" %}
+{% block content %}
+<article>
+    <h2>予約詳細</h2>
+    <p>キャンプ場: {{ booking.campsite.name }}</p>
+    <p>開始日: {{ booking.start_date }}</p>
+    <p>終了日: {{ booking.end_date }}</p>
+    <p>人数: {{ booking.num_people }}</p>
+</article>
+{% endblock %}

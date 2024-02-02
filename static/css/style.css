@@ -1,0 +1,63 @@
+/* style.css */
+.image-container {
+    display: block;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.responsive-image {
+    max-width: 100%;
+    height: auto;
+}
+.reservation-section {
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    margin-top: 30px;
+}
+
+.reservation-form {
+    max-width: 600px;
+    margin: auto;
+}
+
+.booking-form {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.booking-form .form-field {
+    display: flex;
+    flex-direction: column;
+}
+
+.booking-form label {
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.booking-form input[type=date],
+.booking-form input[type=number] {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.submit-button {
+    grid-column: span 2;
+    padding: 10px 20px;
+    background-color: #5cb85c;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.submit-button:hover {
+    background-color: #4cae4c;
+}

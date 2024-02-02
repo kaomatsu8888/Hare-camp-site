@@ -1,27 +1,68 @@
-from http.client import HTTPResponse
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
+from .models import Campsite, Booking
+from .forms import BookingForm
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 
-from blog.forms import CommentForm
-from .models import Post
 
-def frontpage(request): #requestはユーザーからのリクエスト
-    posts = Post.objects.all() #Postモデルのオブジェクトを全て取得
-    return render(request, "blog/frontpage.html" , {"posts": posts}) #render関数は第一引数にrequest、第二引数にテンプレート名、第三引数にテンプレートに渡すデータを辞書型で指定する
+# トップページのビュー
+def homepage(request):
+    campsites = Campsite.objects.all()
+    return render(request, "blog/homepage.html", {"campsites": campsites})
 
-def post_detail(request, slug): #slugはURLの一部として使われる.slugはpost-1が入る。下のpostに入る。同じだったらpost_detail.htmlをリターンで返す
-    post = Post.objects.get(slug=slug) #Postモデルのオブジェクトを取得.getは一つのオブジェクトを取得するメソッド
 
-    if request.method == "POST": #POSTメソッドでリクエストが送られてきたらformを作成する
-        form = CommentForm(request.POST) #formという変数を用意して、importしたCommentFormを代入しrequest.POSTを引数に渡す
+# キャンプ場詳細ページのビュー
+def campsite_detail(request, pk):
+    campsite = get_object_or_404(Campsite, pk=pk)
+    return render(request, "blog/campsite_detail.html", {"campsite": campsite})
 
-        if form.is_valid(): #フォームが有効かどうか、is_valid()関数を使って確認する
-            comment = form.save(commit=False) #commit=Falseはデータベースに保存しないという意味。
-            comment.post = post #comment.postにpostを代入する。postは上のpost = Post.objects.get(slug=slug)で取得したオブジェクト
-            comment.save() #commentを保存する
 
-            return redirect("post_detail", slug=post.slug) #コメントを飛ばしたときにredirecはどこに飛ばすかを指定。現在のページの詳細ページに飛ばす
-        
-    else: #POSTメソッドでリクエストが送られてきていない場合はformを作成する
-        form = CommentForm() #formという変数を用意して、importしたCommentFormを代入する
-        
-    return render(request, "blog/post_detail.html", {"post": post, "form": form})  #render関数は第一引数にrequest、第二引数にテンプレート名、第三引数にテンプレートに渡すデータを辞書型で指定する
+# ユーザーのログイン処理
+def user_login(request):
+    if request.method == "POST":
+        username = request.POST["username"]
+        password = request.POST["password"]
+        user = authenticate(request, username=username, password=password)
+        if user is not None:
+            login(request, user)
+            return redirect("homepage")
+        else:
+            return render(
+                request,
+                "blog/login.html",
+                {"error": "無効なユーザー名またはパスワードです。"},
+            )
+    else:
+        return render(request, "blog/login.html")
+
+
+# ユーザーのログアウト処理
+def user_logout(request):
+    logout(request)
+    return redirect("homepage")
+
+
+# 予約作成ビュー
+@login_required
+def create_booking(request, campsite_id):
+    campsite = get_object_or_404(Campsite, pk=campsite_id)
+    if request.method == "POST":
+        form = BookingForm(request.POST)
+        if form.is_valid():
+            booking = form.save(commit=False)
+            booking.user = request.user
+            booking.campsite = campsite
+            booking.save()
+            return redirect("booking_detail", booking_id=booking.id)
+    else:
+        form = BookingForm()
+    return render(
+        request, "blog/create_booking.html", {"form": form, "campsite": campsite}
+    )
+
+
+# 予約詳細ビュー
+@login_required
+def booking_detail(request, booking_id):
+    booking = get_object_or_404(Booking, pk=booking_id, user=request.user)
+    return render(request, "blog/booking_detail.html", {"booking": booking})

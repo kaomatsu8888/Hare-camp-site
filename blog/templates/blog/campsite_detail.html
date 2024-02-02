@@ -1,0 +1,44 @@
+{% extends "blog/base.html" %}
+{% block content %}
+<main class="container">
+    <article class="message is-primary">
+        <div class="message-header">
+            <p>{{ campsite.name }}</p>
+        </div>
+        <div class="message-body">
+            <div class="image-container" style="max-width: 800px; margin: auto;">
+                <figure class="image is-4by3">
+                    <img src="{{ campsite.image.url }}" alt="{{ campsite.name }}" style="max-width: 100%; height: auto;">
+                </figure>
+            </div>
+            <h2 class="subtitle">場所: {{ campsite.location }}</h2>
+            <p>{{ campsite.description }}</p>
+        </div>
+    </article>
+
+    <section class="reservation-section">
+        <h2>予約方法</h2>
+        <p>下記の予約フォームからご希望の日程と人数を選んでください。</p>
+
+        <div class="reservation-form">
+            <h3>あなたのキャンプを予約</h3>
+            <form method="POST" class="booking-form">
+                {% csrf_token %}
+                <div class="form-field">
+                    <label for="id_start_date">開始日</label>
+                    <input type="date" id="id_start_date" name="start_date" required>
+                </div>
+                <div class="form-field">
+                    <label for="id_end_date">終了日</label>
+                    <input type="date" id="id_end_date" name="end_date" required>
+                </div>
+                <div class="form-field">
+                    <label for="id_num_people">人数</label>
+                    <input type="number" id="id_num_people" name="num_people" required min="1">
+                </div>
+                <button type="submit" class="submit-button">予約する</button>
+            </form>
+        </div>
+    </section>
+</main>
+{% endblock %}
