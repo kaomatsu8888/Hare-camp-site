@@ -1,4 +1,5 @@
-from django.shortcuts import render, redirect, get_object_or_404
+# 見た目に関するビューを記述するファイル
+from django.shortcuts import render, redirect, get_object_or_404 # render, redirect, get_object_or_404をインポートする
 from .models import Campsite, Booking
 from .forms import BookingForm
 from django.contrib.auth import authenticate, login, logout

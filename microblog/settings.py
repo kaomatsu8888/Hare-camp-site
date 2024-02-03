@@ -13,7 +13,7 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 from pathlib import Path
 import os
 
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
+# Base_DIRはプロジェクトのディレクトリを指す
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
@@ -21,16 +21,18 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
+# シークレットキーを設定
 SECRET_KEY = "django-insecure-3za(wp88)60n!es%m3)lvd=8npmerq0tr6313)*tj(0m0d@(&3"
 
 # SECURITY WARNING: don't run with debug turned on in production!
+# デバッグモードを有効にする
 DEBUG = True
-
+# デバッグモードを有効にすると、エラーが発生した際にエラーの詳細を表示する
 ALLOWED_HOSTS = []
 
 
 # Application definition
-
+# インストールするアプリケーションを指定する
 INSTALLED_APPS = [
     "django.contrib.admin",
     "django.contrib.auth",
@@ -50,9 +52,9 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
-
+# ルーティングの設定
 ROOT_URLCONF = "microblog.urls"
-
+# テンプレートの設定
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
