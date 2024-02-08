@@ -12,32 +12,31 @@
                 </figure>
             </div>
             <h2 class="subtitle">場所: {{ campsite.location }}</h2>
-            <p>{{ campsite.description }}</p>
+            <p>{{ campsite.description|linebreaksbr }}</p>
+            <hr>
+            <!-- アクセス情報の表示 -->
+            <h3>アクセス:</h3>
+            <p>{{ campsite.access_info|linebreaksbr }}</p>
+            <hr>
+            <!-- 料金の表示 -->
+            <h3>料金: {{ campsite.price|linebreaksbr }}</h3>
+            <hr>
+            <!-- 電話番号の表示 -->
+            <h3>電話番号: {{ campsite.phone_number|linebreaksbr }}</h3>
+            <hr>
+            <h1>設備情報</h1>
+            <ul>
+                {% for key, value in campsite.amenities.items %}
+                <li>{{ key }}: {{ value }}</li>
+                {% endfor %}
+            </ul>
         </div>
     </article>
 
     <section class="reservation-section">
-        <h2>予約方法</h2>
         <p>下記の予約フォームからご希望の日程と人数を選んでください。</p>
-
-        <div class="reservation-form">
-            <h3>あなたのキャンプを予約</h3>
-            <form method="POST" class="booking-form">
-                {% csrf_token %}
-                <div class="form-field">
-                    <label for="id_start_date">開始日</label>
-                    <input type="date" id="id_start_date" name="start_date" required>
-                </div>
-                <div class="form-field">
-                    <label for="id_end_date">終了日</label>
-                    <input type="date" id="id_end_date" name="end_date" required>
-                </div>
-                <div class="form-field">
-                    <label for="id_num_people">人数</label>
-                    <input type="number" id="id_num_people" name="num_people" required min="1">
-                </div>
-                <button type="submit" class="submit-button">予約する</button>
-            </form>
+        <div class="container">
+            <a href="{% url 'create_booking' campsite_id=campsite.id %}" class="button is-primary">予約する</a>
         </div>
     </section>
 </main>

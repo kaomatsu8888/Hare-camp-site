@@ -2,7 +2,7 @@
 {% block content %}
 <div class="section">
     <div class="container">
-        <h1 class="title">予約を作成</h1>
+        <h1 class="title">予約を作成create_bokking.html</h1>
         <form action="{% url 'create_booking' campsite_id=campsite.id %}" method="post">
             {% csrf_token %}
             <div class="field">

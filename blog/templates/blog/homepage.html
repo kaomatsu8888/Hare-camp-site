@@ -1,30 +1,22 @@
 {% extends "blog/base.html" %}
+{% load custom_filters %}
 {% block content %}
-<h1 class="title">キャンプ場一覧</h1>
-<div class="columns is-multiline">
-    {% for campsite in campsites %}
-    <div class="column is-one-quarter">
-        <a href="{% url 'campsite_detail' pk=campsite.pk %}" style="color: inherit; text-decoration: none;">
-            <div class="card">
-                <div class="card-image">
-                    <figure class="image is-4by3">
-                        <img src="{{ campsite.image.url }}" alt="{{ campsite.name }}">
-                    </figure>
-                </div>
-                <div class="card-content">
-                    <div class="media">
-                        <div class="media-content">
-                            <p class="title is-4">{{ campsite.name }}</p>
-                            <p class="subtitle is-6">{{ campsite.location }}</p>
-                        </div>
-                    </div>
-                    <div class="content">
-                        {{ campsite.description|truncatewords:10 }}
-                    </div>
-                </div>
-            </div>
-        </a>
-    </div>
-    {% endfor %}
+<h1 class="title">キャンプ場一覧と天気予報</h1>
+
+<!-- 天気予報の表示 -->
+<div class="weather-forecast">
+    <h2>天気予報</h2>
+    <p>{{ weather_overview }}</p> <!-- 天気予報の概要を表示 -->
+
+    <!-- 今日の天気予報 -->
+    <p>天気: {{ forecasts.weathers }}</p> <!-- 天気情報の表示 -->
+    <p>風: {{ forecasts.winds }}</p> <!-- 風情報の表示 -->
+
+    <!-- 東京地方の平均気温と降水量 -->
+    <h3>東京地方の気温と降水量</h3>
+    <p>最低気温平均: {{ tokyo_temps.min }}℃</p>
+    <p>最高気温平均: {{ tokyo_temps.max }}℃</p>
+    <p>最小降水量: {{ tokyo_precip.min }}mm</p>
+    <p>最大降水量: {{ tokyo_precip.max }}mm</p>
 </div>
 {% endblock %}

@@ -1,15 +1,58 @@
 # 見た目に関するビューを記述するファイル
 from django.shortcuts import render, redirect, get_object_or_404 # render, redirect, get_object_or_404をインポートする
-from .models import Campsite, Booking
+from .models import Campsite, Booking, WeatherArea  # Campsite, Booking, WeatherAreaモデルをインポートする
 from .forms import BookingForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
+import requests
 
 
-# トップページのビュー
 def homepage(request):
-    campsites = Campsite.objects.all()
-    return render(request, "blog/homepage.html", {"campsites": campsites})
+    # WeatherAreaモデルから最初のエリアコードを取得
+    weather_area = WeatherArea.objects.first()
+    if weather_area:
+        area_code = weather_area.area_code  # エリアコードを取得
+    else:
+        area_code = "130000"  # デフォルト値（東京）
+
+    # APIエンドポイントを動的に生成
+    weather_url = f"https://www.jma.go.jp/bosai/forecast/data/forecast/{area_code}.json"
+
+    # APIから天気予報データを取得
+    response = requests.get(weather_url)
+    weather_data = response.json()
+
+    # 天気予報の概要を加工
+    weather_overview = weather_data[0]["publishingOffice"]
+
+    # 今日の天気予報を加工
+    today_weather = weather_data[0]["timeSeries"][0]["areas"][0]
+    forecasts = {
+        "weathers": today_weather["weathers"][0],  # 天気情報
+        "winds": today_weather["winds"][0],  # 風情報
+    }
+
+    # 東京地方の平均気温と降水量を抽出
+    temp_precip_data = weather_data[-1]  # 最後の要素に平均気温と降水量が含まれています
+    tokyo_data = next(
+        area
+        for area in temp_precip_data["tempAverage"]["areas"]
+        if area["area"]["code"] == "44132"
+    )
+    tokyo_temps = {"min": tokyo_data["min"], "max": tokyo_data["max"]}
+    tokyo_precip = {
+        "min": temp_precip_data["precipAverage"]["areas"][0]["min"],
+        "max": temp_precip_data["precipAverage"]["areas"][0]["max"],
+    }
+
+    # 天気予報のデータをテンプレートに渡す
+    context = {
+        "weather_overview": weather_overview,
+        "forecasts": forecasts,
+        "tokyo_temps": tokyo_temps,
+        "tokyo_precip": tokyo_precip,
+    }
+    return render(request, "blog/homepage.html", context)
 
 
 # キャンプ場詳細ページのビュー

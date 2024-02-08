@@ -9,15 +9,15 @@ import os
 
 # キャンプ場のモデル
 class Campsite(models.Model):
-    name = models.CharField(
-        "キャンプ場名", max_length=255
-    )  # キャンプ場名は文字列で保存
-    location = models.CharField("場所", max_length=255)  # 場所は文字列で保存
-    description = models.TextField("説明")
-    amenities = models.JSONField("アメニティ")  # アメニティはJSON形式で保存
-    image = models.ImageField(
-        "画像", upload_to="campsites/"
-    )  # 画像はcampsites/ディレクトリにアップロード
+    name = models.CharField("キャンプ場名", max_length=255)
+    location = models.CharField("場所", max_length=255)
+    description = models.TextField("キャンプ場の説明")
+    amenities = models.JSONField("設備")
+    image = models.ImageField("画像", upload_to="campsites/")
+    access_info = models.TextField("アクセス情報", blank=True)
+    price = models.CharField("料金", max_length=255, blank=True)
+    phone_number = models.CharField("電話番号", max_length=20, blank=True)
+    weather_area = models.CharField("天気予報エリアコード", max_length=10, blank=True)  # 新しいフィールド
 
     def __str__(self):  # 管理画面で表示する文字列
         return self.name
@@ -73,8 +73,16 @@ class Comment(models.Model):  # forms.pyで作成したモデルをここで作�
         Post, on_delete=models.CASCADE, related_name="comments"
     )  # Cascadeは投稿が削除されたら全ての情報を削除する(本文、email、名前)
     name = models.CharField(max_length=255)
-    email = models.EmailField() # emailの形式で入力する
+    email = models.EmailField()  # emailの形式で入力する
     body = models.TextField()
     posted_date = models.DateTimeField(
         auto_now_add=True
     )  # auto_now_add=Trueは投稿日時を自動で入力する
+
+# 天気用のエリアモデル
+class WeatherArea(models.Model):
+    name = models.CharField(max_length=100, verbose_name="エリア名")
+    area_code = models.CharField(max_length=6, verbose_name="エリアコード")
+
+    def __str__(self):
+        return self.name

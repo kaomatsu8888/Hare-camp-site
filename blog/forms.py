@@ -2,6 +2,7 @@
 from django import forms
 from .models import Comment  # Commentモデルをインポートする
 from .models import Booking  # Bookingモデルをインポートする
+from .models import Campsite  # Campsiteモデルをインポートする
 
 
 class CommentForm(forms.ModelForm):
@@ -17,3 +18,18 @@ class BookingForm(forms.ModelForm):  # BookingFormという名前のフォーム
     class Meta:
         model = Booking
         fields = ["campsite", "start_date", "end_date", "num_people"]
+
+
+class CampsiteForm(forms.ModelForm):
+    class Meta:
+        model = Campsite
+        fields = [
+            "name",
+            "location",
+            "description",
+            "amenities",
+            "access_info",
+            "price",
+            "phone_number",
+        ]
+        # fields属性にフィールドの順番をリストとして指定する
