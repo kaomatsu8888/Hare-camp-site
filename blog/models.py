@@ -72,7 +72,7 @@ class Comment(models.Model):  # forms.pyで作成したモデルをここで作�
     post = models.ForeignKey(
         Post, on_delete=models.CASCADE, related_name="comments"
     )  # Cascadeは投稿が削除されたら全ての情報を削除する(本文、email、名前)
-    name = models.CharField(max_length=255)
+    name = models.CharField(max_length=255) # 名前の文字数制限
     email = models.EmailField()  # emailの形式で入力する
     body = models.TextField()
     posted_date = models.DateTimeField(
