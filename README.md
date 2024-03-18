@@ -54,6 +54,7 @@
 - 構成やり直し
 
 スクリーンショット
+<img width="1410" alt="スクリーンショット 2024-03-18 14 03 35" src="https://github.com/kaomatsu8888/Hare-camp-site/assets/61591650/aa747c25-2c54-4a96-b578-f3c6733ef033">
 
 
 
