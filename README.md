@@ -46,8 +46,9 @@
 - キャンプ場登録機能
 - 天気機能を追加 →OpenWeatherAPIを使用していたが、精度難ありのため
   気象庁のAPI使用に変更
-- 気象庁のAPIを使用して、天気とアイコンは取得出来た
-出力結果は
+- 気象庁のAPIを使用して、天気とアイコンは取得出来たが、ビューに反映出来ていないです
+- 
+## 出力結果例
 ----埼玉県----
 2024-02-25T06:00:00+09:00: 曇り (アイコン: 03)
 2024-02-25T09:00:00+09:00: 曇り (アイコン: 03)
@@ -61,6 +62,8 @@
 
 スクリーンショット
 <img width="1410" alt="スクリーンショット 2024-03-18 14 03 35" src="https://github.com/kaomatsu8888/Hare-camp-site/assets/61591650/aa747c25-2c54-4a96-b578-f3c6733ef033">
+<img width="1395" alt="スクリーンショット 2024-03-18 13 43 33" src="https://github.com/kaomatsu8888/Hare-camp-site/assets/61591650/c9ee1f6d-e5cd-40db-be3a-c165c2a87a8d">
+<img width="1418" alt="スクリーンショット 2024-03-18 13 48 06" src="https://github.com/kaomatsu8888/Hare-camp-site/assets/61591650/0bec83c3-00aa-47c9-8cd8-74543ff87faf">
 
 
 
