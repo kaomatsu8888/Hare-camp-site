@@ -118,7 +118,7 @@
 - 構成やり直し
 
 スクリーンショット
-<img width="1410" alt="スクリーンショット 2024-03-18 14 03 35" src="https://github.com/kaomatsu8888/Hare-camp-site/assets/61591650/aa747c25-2c54-4a96-b578-f3c6733ef033">
+<img width="1445" alt="スクリーンショット 2024-03-19 11 03 06" src="https://github.com/kaomatsu8888/Hare-camp-site/assets/61591650/3cce2e1e-9976-4906-9dc7-ff6078131f25">
 <img width="1395" alt="スクリーンショット 2024-03-18 13 43 33" src="https://github.com/kaomatsu8888/Hare-camp-site/assets/61591650/c9ee1f6d-e5cd-40db-be3a-c165c2a87a8d">
 <img width="1418" alt="スクリーンショット 2024-03-18 13 48 06" src="https://github.com/kaomatsu8888/Hare-camp-site/assets/61591650/0bec83c3-00aa-47c9-8cd8-74543ff87faf">
 
