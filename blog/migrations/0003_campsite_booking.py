@@ -5,18 +5,18 @@ from django.conf import settings
 from django.db import migrations, models
 
 
-class Migration(migrations.Migration):
+class Migration(migrations.Migration): # マイグレーションのクラス/ブログアプリを拡張したため。削除予定
     dependencies = [
         ("blog", "0002_comment"),
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
     ]
 
-    operations = [
+    operations = [ # 以下の内容でマイグレーションを実行
         migrations.CreateModel(
-            name="Campsite",
+            name="Campsite", # キャンプ場モデルを作成
             fields=[
                 (
-                    "id",
+                    "id", # ID
                     models.BigAutoField(
                         auto_created=True,
                         primary_key=True,

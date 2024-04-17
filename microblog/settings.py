@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 # プロジェクトの設定情報を記述したファイル
+from .settings_local import *
 from pathlib import Path
 import os
 
@@ -21,8 +22,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-# シークレットキーを設定
-SECRET_KEY = "django-insecure-3za(wp88)60n!es%m3)lvd=8npmerq0tr6313)*tj(0m0d@(&3"
+# シークレットキーを設定 (別ファイルに移動)
+SECRET_KEY = ""
 
 # SECURITY WARNING: don't run with debug turned on in production!
 # デバッグモードを有効にする
