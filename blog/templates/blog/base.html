@@ -30,9 +30,11 @@
                             {{ user.username }}
                         </a>
                         <div class="navbar-dropdown">
-                            <a class="navbar-item" href="{% url 'user_logout' %}">
-                                ログアウト
-                            </a>
+                <form action="{% url 'user_logout' %}" method="post" style="display: inline;">
+                    {% csrf_token %}
+                    <button type="submit" class="navbar-item" style="background: none; border: none; padding: 0; color: inherit; text-decoration: none; cursor: pointer;">
+                        ログアウト
+                    </button>
                         </div>
                     </div>
                     {% else %}
