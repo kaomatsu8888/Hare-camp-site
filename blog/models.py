@@ -23,7 +23,7 @@ class Campsite(models.Model):
         return self.name
 
     # 画像が消えなかったので削除するための処理を追加
-    def save(self, *args, **kwargs):
+    def save(self, *args, **kwargs): # argsは引数、kwargsはキーワード引数
         # 既存のインスタンスを確認して、画像が変更されているかチェック
         if self.pk:  # インスタンスが既存の場合
             old_image = Campsite.objects.get(pk=self.pk).image  # 既存の画像を取得
@@ -40,11 +40,11 @@ def submission_delete(sender, instance, **kwargs):  # 画像ファイルを削�
 
 
 # 予約のモデル
-class Booking(models.Model):
-    user = models.ForeignKey(
+class Booking(models.Model): 
+    user = models.ForeignKey( # ユーザーとキャンプ場を紐づける
         User, verbose_name="ユーザー", on_delete=models.CASCADE, related_name="bookings"
     )
-    campsite = models.ForeignKey(
+    campsite = models.ForeignKey( # キャンプ場とユーザーを紐づける
         Campsite,
         verbose_name="キャンプ場",
         on_delete=models.CASCADE,

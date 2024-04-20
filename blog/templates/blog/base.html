@@ -2,11 +2,10 @@
 <!--/Users/kaorumatsunaga/mybusinessproduct/hare-camp/hare-camp1/blog/templates/blog/base.html-->
 <!DOCTYPE html>
 <html lang="ja">
-
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"><!--viewportはページの表示方法を指定するためのメタタグ-->
-    <title>はれ☀きゃん</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>キャンプ予約サイト</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma/css/bulma.min.css">
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
@@ -17,7 +16,7 @@
             <!-- ナビゲーションブランド -->
             <div class="navbar-brand">
                 <a class="navbar-item" href="{% url 'homepage' %}">
-                    はれ☀きゃん
+                    キャンプ予約サイト
                 </a>
             </div>
 
@@ -30,11 +29,15 @@
                             {{ user.username }}
                         </a>
                         <div class="navbar-dropdown">
-                <form action="{% url 'user_logout' %}" method="post" style="display: inline;">
-                    {% csrf_token %}
-                    <button type="submit" class="navbar-item" style="background: none; border: none; padding: 0; color: inherit; text-decoration: none; cursor: pointer;">
-                        ログアウト
-                    </button>
+                            <a class="navbar-item" href="{% url 'my_bookings' %}">
+                                予約確認
+                            </a>
+                            <form action="{% url 'user_logout' %}" method="post" style="padding: 0;">
+                                {% csrf_token %}
+                                <button type="submit" class="navbar-item">
+                                    ログアウト
+                                </button>
+                            </form>
                         </div>
                     </div>
                     {% else %}

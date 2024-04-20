@@ -15,8 +15,8 @@ admin.site.register(Comment)  # adminにcommentsの管理画面を追加する
 
 
 # Register your models here.
-@admin.register(Campsite)
-class CampsiteAdmin(admin.ModelAdmin):
+@admin.register(Campsite) # Campsiteモデルを管理画面に登録する
+class CampsiteAdmin(admin.ModelAdmin): # Campsiteモデルの管理画面をカスタマイズする
     list_display = (
         "name",
         "location",

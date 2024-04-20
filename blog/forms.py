@@ -14,7 +14,7 @@ class CommentForm(forms.ModelForm):
         # models.pyへコメントのモデルを作成する→go
 
 
-class BookingForm(forms.ModelForm):
+class BookingForm(forms.ModelForm): # BookingFormクラスを作成する
     num_people = forms.IntegerField(
         widget=forms.NumberInput(attrs={"min": 1}), validators=[MinValueValidator(1)]
     )

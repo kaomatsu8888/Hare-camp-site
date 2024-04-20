@@ -1,0 +1,18 @@
+{% extends "blog/base.html" %}
+{% block content %}
+<div class="section">
+    <div class="container">
+        <h1 class="title">予約</h1>
+        {% for booking in bookings %}
+        <div class="box">
+            <h2>{{ booking.campsite.name }}</h2>
+            <p>期間: {{ booking.start_date }} から {{ booking.end_date }} まで</p>
+            <p>人数: {{ booking.num_people }}</p>
+            <a href="{% url 'booking_detail' booking.id %}">詳細を見る</a>
+        </div>
+        {% empty %}
+        <p>予約はありません。</p>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

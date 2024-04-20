@@ -1,13 +1,13 @@
 <!-- creat_booking.html-->
 {% extends "blog/base.html" %}
 {% block content %}
-<div class="section">
-    <div class="container">
-        <h1 class="title">予約を作成</h1>
-        <form action="{% url 'create_booking' campsite_id=campsite.id %}" method="post">
-            {% csrf_token %}
-            <div class="field">
-                <label class="label" for="start_date">開始日</label>
+<div class="section"><!-- sectionはコンテンツを区切るための要素 -->
+    <div class="container"> <!-- containerはコンテンツを中央に配置するための要素 -->
+        <h1 class="title">キャンプ場を予約する</h1>
+        <form action="{% url 'create_booking' campsite_id=campsite.id %}" method="post"> <!-- formタグでPOSTリクエストを送信 -->
+            {% csrf_token %} <!-- CSRF対策 -->
+            <div class="field"> <!-- fieldはフォームの項目を配置するための要素 -->
+                <label class="label" for="start_date">開始日</label> <!-- labelはフォームの項目のラベルを配置するための要素 -->
                 <div class="control">
                     <input class="input" type="date" id="start_date" name="start_date" required>
                 </div>
@@ -33,3 +33,4 @@
     </div>
 </div>
 {% endblock %}
+

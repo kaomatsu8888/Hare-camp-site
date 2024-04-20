@@ -19,8 +19,12 @@ urlpatterns = [
     path(
         "booking/<int:booking_id>/", views.booking_detail, name="booking_detail"
     ),  # 予約詳細ビューのURL
-    path("login/", views.user_login, name="user_login"),  # ログインビューへのパス
-    path('logout/', auth_views.LogoutView.as_view(next_page='user_login'), name='user_logout')  # ログアウトビューへのパス
+    path("login/", views.user_login, name="user_login"
+    ),  # ログインビューへのパス
+    path('logout/', auth_views.LogoutView.as_view(next_page='user_login'), name='user_logout'
+    ),  # ログアウトビューへのパス
+    path('my-bookings/', views.my_bookings, name='my_bookings') # ユーザーの予約一覧ビューのURL
+
 ]
 """
 /logout/ に対する GET リクエストが許可されていないためです。

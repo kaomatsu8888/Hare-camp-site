@@ -11,7 +11,6 @@ def homepage(request):
     campsites = Campsite.objects.all()  # 全てのキャンプ場を取得
     return render(request, "blog/homepage.html", {"campsites": campsites})
 
-
     # # WeatherAreaモデルから最初のエリアコードを取得
     # weather_area = WeatherArea.objects.first()
     # if weather_area:
@@ -91,22 +90,31 @@ def user_logout(request):
 
 
 # 予約作成ビュー
-@login_required
-def create_booking(request, campsite_id):
-    campsite = get_object_or_404(Campsite, pk=campsite_id)
-    if request.method == "POST":
-        form = BookingForm(request.POST)
-        if form.is_valid():
-            booking = form.save(commit=False)
-            booking.user = request.user
-            booking.campsite = campsite
-            booking.save()
-            return redirect("booking_detail", booking_id=booking.id)
+@login_required # ログインしていない場合はログインページにリダイレクト
+def create_booking(request, campsite_id): # キャンプ場IDを受け取る
+    campsite = get_object_or_404(Campsite, pk=campsite_id) # キャンプ場を取得
+    if request.method == "POST": # POSTリクエストの場合
+        form = BookingForm(request.POST) # フォームを作成
+        if form.is_valid(): # フォームが有効な場合
+            booking = form.save(commit=False) # 予約を保存
+            booking.user = request.user # ログインユーザーを取得
+            booking.campsite = campsite # キャンプ場を取得
+            booking.save() # 予約を保存
+            return redirect("booking_detail", booking_id=booking.id) # 予約詳細ページにリダイレクト
+        else:
+            # バリデーションエラーの場合は、エラーメッセージを表示
+            return render(
+                request,
+                "blog/create_booking.html",
+                {
+                    "form": form,
+                    "campsite": campsite,
+                    "errors": form.errors,  # エラーメッセージを追加
+                },
+            )
     else:
         form = BookingForm()
-    return render(
-        request, "blog/create_booking.html", {"form": form, "campsite": campsite}
-    )
+        return render(request, "blog/create_booking.html", {"form": form, "campsite": campsite} ) # フォームを表示
 
 
 # 予約詳細ビュー
@@ -114,3 +122,11 @@ def create_booking(request, campsite_id):
 def booking_detail(request, booking_id):
     booking = get_object_or_404(Booking, pk=booking_id, user=request.user)
     return render(request, "blog/booking_detail.html", {"booking": booking})
+
+# ユーザーの予約一覧ビュー
+@login_required
+def my_bookings(request):
+    user_bookings = Booking.objects.filter(
+        user=request.user
+    )  # ログインユーザーの予約を取得
+    return render(request, "blog/my_bookings.html", {"bookings": user_bookings})
