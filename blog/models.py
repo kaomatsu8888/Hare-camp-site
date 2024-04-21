@@ -9,7 +9,7 @@ import os
 
 # キャンプ場のモデル
 class Campsite(models.Model):
-    name = models.CharField("キャンプ場名", max_length=255)
+    name = models.CharField("キャンプ場名", max_length=255) # キャンプ場名の文字数制限
     location = models.CharField("場所", max_length=255)
     description = models.TextField("キャンプ場の説明")
     amenities = models.JSONField("設備")
