@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 from django.utils import timezone
 from django.db.models.signals import post_delete
 from django.dispatch import receiver
+# from django.core.exceptions import ValidationError # バリデーションエラーを追加 変化なし
 import os
 
 
@@ -33,6 +34,7 @@ class Campsite(models.Model):
         super().save(*args, **kwargs)  # 画像を保存
 
 
+
 # モデルが削除された後に画像ファイルも削除するためのシグナル
 @receiver(post_delete, sender=Campsite)  # Campsiteモデルが削除された後に実行
 def submission_delete(sender, instance, **kwargs):  # 画像ファイルを削除
@@ -56,6 +58,10 @@ class Booking(models.Model):
 
     def __str__(self):
         return f"{self.user.username} - {self.campsite.name}"
+    
+    # def clean(self): # バリデーションを追加
+    #     if self.end_date < self.start_date: # 終了日が開始日よりも前の日付の場合
+    #         raise ValidationError("終了日は開始日よりも後の日付でなければなりません")
 
 
 class Post(models.Model):

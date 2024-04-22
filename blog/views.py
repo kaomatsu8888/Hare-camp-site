@@ -5,6 +5,8 @@ from .forms import BookingForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 import requests
+from django.contrib import messages
+import logging
 
 
 def homepage(request):
@@ -88,7 +90,7 @@ def user_logout(request):
     logout(request)
     return redirect("homepage")
 
-
+logger = logging.getLogger(__name__)  # ロガーを取得
 # 予約作成ビュー
 @login_required # ログインしていない場合はログインページにリダイレクト
 def create_booking(request, campsite_id): # キャンプ場IDを受け取る
@@ -103,6 +105,10 @@ def create_booking(request, campsite_id): # キャンプ場IDを受け取る
             return redirect("booking_detail", booking_id=booking.id) # 予約詳細ページにリダイレクト
         else:
             # バリデーションエラーの場合は、エラーメッセージを表示
+            logger.error(f"Form validation failed: {form.errors}")  # ログにエラーを記録
+            messages.error(
+                request, "予約の作成に失敗しました。エラーを確認してください。"
+            )
             return render(
                 request,
                 "blog/create_booking.html",

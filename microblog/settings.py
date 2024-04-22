@@ -9,6 +9,7 @@ https://docs.djangoproject.com/en/5.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.0/ref/settings/
 """
+
 # プロジェクトの設定情報を記述したファイル
 from .settings_local import *
 from pathlib import Path
@@ -43,7 +44,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "blog" # add this line
+    "blog",  # add this line
 ]
 
 MIDDLEWARE = [
@@ -110,9 +111,9 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/5.0/topics/i18n/
 
-LANGUAGE_CODE = "ja" # 変更
+LANGUAGE_CODE = "ja"  # 変更
 
-TIME_ZONE = "Asia/Tokyo" # 変更
+TIME_ZONE = "Asia/Tokyo"  # 変更
 
 USE_I18N = True
 
@@ -140,5 +141,25 @@ STATICFILES_DIRS = [
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 # メディアファイルの設定
-MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = "/media/"
+MEDIA_ROOT = os.path.join(BASE_DIR, "media")
+
+# ロギングの設定
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "handlers": {
+        "file": {
+            "level": "DEBUG",
+            "class": "logging.FileHandler",
+            'filename': '/Users/kaorumatsunaga/mybusinessproduct/hare-camp/hare-camp1/logs/debug.log',
+        },
+    },
+    "loggers": {
+        "django": {
+            "handlers": ["file"],
+            "level": "DEBUG",
+            "propagate": True,
+        },
+    },
+}
