@@ -17,6 +17,8 @@ import os
 # Base_DIRはプロジェクトのディレクトリを指す
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+# ログインしない状態で予約ページにアクセスした場合、ログインページにリダイレクトする
+LOGIN_URL = "user_login"
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
