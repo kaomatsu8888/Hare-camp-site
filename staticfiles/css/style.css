@@ -1,16 +1,16 @@
 /* style.css */
-.image-container {
+.image-container { /* image containerは画像を中央に表示するためのスタイル */
     display: block;
     max-width: 800px;
     margin-left: auto;
     margin-right: auto;
 }
 
-.responsive-image {
+.responsive-image { /* 画像をレスポンシブにするためのスタイル */
     max-width: 100%;
     height: auto;
 }
-.reservation-section {
+.reservation-section { /* 予約セクションのスタイル */
     background-color: #f9f9f9;
     padding: 20px;
     border-radius: 8px;
@@ -18,24 +18,24 @@
     margin-top: 30px;
 }
 
-.reservation-form {
+.reservation-form { /* 予約フォームのスタイル */
     max-width: 600px;
     margin: auto;
 }
 
-.booking-form {
+.booking-form { /* 予約フォームのスタイル */
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 20px;
     margin-top: 20px;
 }
 
-.booking-form .form-field {
+.booking-form .form-field { /* フォームフィールドのスタイル */
     display: flex;
     flex-direction: column;
 }
 
-.booking-form label {
+.booking-form label { /* ラベルのスタイル */
     font-weight: bold;
     margin-bottom: 5px;
 }
@@ -47,7 +47,7 @@
     border-radius: 4px;
 }
 
-.submit-button {
+.submit-button { /* 送信ボタンのスタイル */
     grid-column: span 2;
     padding: 10px 20px;
     background-color: #5cb85c;
@@ -58,7 +58,21 @@
     transition: background-color 0.3s ease;
 }
 
-.submit-button:hover {
+.submit-button:hover { /* 送信ボタンのホバースタイル */
     background-color: #4cae4c;
 }
 
+/* スマートフォンでハンバーガーメニューを表示 */
+@media screen and (max-width: 1023px) {
+    .navbar-burger {
+        display: flex;
+    }
+
+    .navbar-menu {
+        display: none;
+    }
+
+    .navbar-menu.is-active {
+        display: block;
+    }
+}
