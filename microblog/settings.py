@@ -12,8 +12,11 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 
 # プロジェクトの設定情報を記述したファイル
 from .settings_local import *
-from pathlib import Path
+from pathlib import Path 
+from decouple import config # add this line
+from dj_database_url import parse as dburl # add this line
 import os
+
 
 # Base_DIRはプロジェクトのディレクトリを指す
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -32,8 +35,8 @@ LOGIN_URL = "user_login"
 # デバッグモードを有効にする
 DEBUG = True
 # デバッグモードを有効にすると、エラーが発生した際にエラーの詳細を表示する
-ALLOWED_HOSTS = []
-
+ALLOWED_HOSTS = ['*'] # デバッグモードの場合は全てのホストからのアクセスを許可
+### デプロイが完成したら、ALLOWED_HOSTSを設定する ###
 
 # Application definition
 # インストールするアプリケーションを指定する
@@ -81,11 +84,18 @@ WSGI_APPLICATION = "microblog.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
+# データベース初期設定
+# DATABASES = {
+#     "default": {
+#         "ENGINE": "django.db.backends.sqlite3",
+#         "NAME": BASE_DIR / "db.sqlite3",
+#     }
+# }
+# データベースの設定Heroku使用の為に追加
+default_dburl = "sqlite:///" + os.path.join(BASE_DIR, "db.sqlite3")
+
 DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
-    }
+    "default": config("DATABASE_URL", default=default_dburl, cast=dburl),
 }
 
 
@@ -125,6 +135,8 @@ USE_TZ = True
 
 # 静的ファイルのURLとディレクトリを設定
 STATIC_URL = "static/"
+# Heroku使用の為に追加
+STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 
 # 静的ファイルを集めるディレクトリを設定
 STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
