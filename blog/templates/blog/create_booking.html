@@ -7,7 +7,7 @@
         <form action="{% url 'create_booking' campsite_id=campsite.id %}" method="post"> <!-- formタグでPOSTリクエストを送信 -->
             {% csrf_token %} <!-- CSRF対策 -->
             <div class="field"> <!-- fieldはフォームの項目を配置するための要素 -->
-                <label class="label" for="start_date">開始日</label> <!-- labelはフォームの項目のラベルを配置するための要素 -->
+                <label class="label" for="start_date">開始日</label> 
                 <div class="control">
                     <input class="input" type="date" id="start_date" name="start_date" required>
                 </div>

@@ -1,6 +1,14 @@
 # 見た目に関するビューを記述するファイル
-from django.shortcuts import render, redirect, get_object_or_404 # render, redirect, get_object_or_404をインポートする
-from .models import Campsite, Booking, WeatherArea  # Campsite, Booking, WeatherAreaモデルをインポートする
+from django.shortcuts import (
+    render,
+    redirect,
+    get_object_or_404,
+)  # render, redirect, get_object_or_404をインポートする
+from .models import (
+    Campsite,
+    Booking,
+    WeatherArea,
+)  # Campsite, Booking, WeatherAreaモデルをインポートする
 from .forms import BookingForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
@@ -90,25 +98,29 @@ def user_logout(request):
     logout(request)
     return redirect("homepage")
 
+
 logger = logging.getLogger(__name__)  # ロガーを取得
+
+
 # 予約作成ビュー
-@login_required # ログインしていない場合はログインページにリダイレクト
-def create_booking(request, campsite_id): # キャンプ場IDを受け取る
-    campsite = get_object_or_404(Campsite, pk=campsite_id) # キャンプ場を取得
-    if request.method == "POST": # POSTリクエストの場合
-        form = BookingForm(request.POST) # フォームを作成
-        if form.is_valid(): # フォームが有効な場合
-            booking = form.save(commit=False) # 予約を保存
-            booking.user = request.user # ログインユーザーを取得
-            booking.campsite = campsite # キャンプ場を取得
-            booking.save() # 予約を保存
-            return redirect("booking_detail", booking_id=booking.id) # 予約詳細ページにリダイレクト
+@login_required  # ログインしていない場合はログインページにリダイレクト
+def create_booking(request, campsite_id):  # キャンプ場IDを受け取る
+    campsite = get_object_or_404(Campsite, pk=campsite_id)  # キャンプ場を取得
+    if request.method == "POST":  # POSTリクエストの場合
+        form = BookingForm(request.POST)  # フォームを作成
+        print("aa")
+        if form.is_valid():  # フォームが有効な場合
+            booking = form.save(commit=False)  # 予約を保存
+            booking.user = request.user  # ログインユーザーを取得
+            booking.campsite = campsite  # キャンプ場を取得
+            booking.save()  # 予約を保存
+            return redirect(
+                "booking_detail", booking_id=booking.id
+            )  # 予約詳細ページにリダイレクト
         else:
             # バリデーションエラーの場合は、エラーメッセージを表示
             logger.error(f"Form validation failed: {form.errors}")  # ログにエラーを記録
-            messages.error(
-                request, "予約の作成に失敗しました。エラーを確認してください。"
-            )
+            messages.error(request, "予約の作成に失敗しました。エラー。")
             return render(
                 request,
                 "blog/create_booking.html",
@@ -120,7 +132,9 @@ def create_booking(request, campsite_id): # キャンプ場IDを受け取る
             )
     else:
         form = BookingForm()
-        return render(request, "blog/create_booking.html", {"form": form, "campsite": campsite} ) # フォームを表示
+        return render(
+            request, "blog/create_booking.html", {"form": form, "campsite": campsite}
+        )  # フォームを表示
 
 
 # 予約詳細ビュー
@@ -128,6 +142,7 @@ def create_booking(request, campsite_id): # キャンプ場IDを受け取る
 def booking_detail(request, booking_id):
     booking = get_object_or_404(Booking, pk=booking_id, user=request.user)
     return render(request, "blog/booking_detail.html", {"booking": booking})
+
 
 # ユーザーの予約一覧ビュー
 @login_required

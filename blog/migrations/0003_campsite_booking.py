@@ -11,12 +11,12 @@ class Migration(migrations.Migration): # マイグレーションのクラス/�
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
     ]
 
-    operations = [ # 以下の内容でマイグレーションを実行
+    operations = [  # 以下の内容でマイグレーションを実行
         migrations.CreateModel(
-            name="Campsite", # キャンプ場モデルを作成
+            name="Campsite",  # キャンプ場モデルを作成
             fields=[
                 (
-                    "id", # ID
+                    "id",  # ID
                     models.BigAutoField(
                         auto_created=True,
                         primary_key=True,
@@ -28,7 +28,10 @@ class Migration(migrations.Migration): # マイグレーションのクラス/�
                 ("location", models.CharField(max_length=255, verbose_name="場所")),
                 ("description", models.TextField(verbose_name="説明")),
                 ("amenities", models.JSONField(verbose_name="アメニティ")),
-                ("image", models.ImageField(upload_to="campsites/", verbose_name="画像")),
+                (
+                    "image",
+                    models.ImageField(upload_to="campsites/", verbose_name="画像"),
+                ),
             ],
         ),
         migrations.CreateModel(
@@ -43,8 +46,8 @@ class Migration(migrations.Migration): # マイグレーションのクラス/�
                         verbose_name="ID",
                     ),
                 ),
-                ("start_date", models.DateField(verbose_name="開始日")),
-                ("end_date", models.DateField(verbose_name="終了日")),
+                ("start_date", models.IntegerField(verbose_name="開始日")),
+                ("end_date", models.IntegerField(verbose_name="終了日")),
                 ("num_people", models.IntegerField(verbose_name="人数")),
                 (
                     "user",

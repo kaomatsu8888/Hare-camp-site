@@ -23,11 +23,20 @@ class BookingForm(forms.ModelForm): # BookingFormクラスを作成する
         model = Booking
         fields = ["campsite", "start_date", "end_date", "num_people"]
 
-    def clean_num_people(self):
-        num_people = self.cleaned_data["num_people"]
-        if num_people < 1:
-            raise forms.ValidationError("予約人数は1人以上である必要があります。")
-        return num_people
+    class BookingForm(forms.ModelForm): # BookingFormクラスを作成する
+        num_people = forms.IntegerField(
+            widget=forms.NumberInput(attrs={"min": 1}), validators=[MinValueValidator(1)]
+        )
+
+        def clean_num_people(self):
+            self.num_people = self.cleaned_data["num_people"]
+            if self.num_people < 1:
+                raise forms.ValidationError("予約人数は1人以上である必要があります。")
+            return self.num_people
+
+        class Meta:
+            model = Booking
+            fields = ["campsite", "start_date", "end_date", "num_people"]
 
 
 class CampsiteForm(forms.ModelForm):
