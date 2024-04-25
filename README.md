@@ -34,7 +34,7 @@
 
 ## 使用技術
 フロントエンド
-- HTML/CSS
+- HTML/CSS/JavaScript
 
 バックエンド
 - Python 3.11.5
