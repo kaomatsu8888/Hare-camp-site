@@ -41,10 +41,10 @@
 - Django 4.2.6
 
 データベース
-SQLite(デフォルト)
+- SQLite(デフォルト)
 
 インフラ
-Heroku
+- Heroku
 
 
 ## 機能一覧
